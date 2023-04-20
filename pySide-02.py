@@ -35,6 +35,9 @@ class ImageWidget(QWidget):
             file_path = file_dialog.selectedFiles()[0]
             # Load the image
             image = QPixmap(file_path)
+            # Check if the image is larger than 250x250 and resize it if necessary
+            if image.width() > 250 or image.height() > 250:
+                image = image.scaled(250, 250, Qt.KeepAspectRatio)
             # Set the image as the pixmap for the label
             self.label.setPixmap(image)
             # Resize the window to its initial size
