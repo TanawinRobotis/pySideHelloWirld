@@ -6,6 +6,10 @@ from PySide6.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QW
 class ImageWidget(QWidget):
     def __init__(self):
         super().__init__()
+
+        # Set the widget properties
+        self.setWindowTitle("Image Viewer")
+        self.setGeometry(100, 100, 500, 500)
         
         # Create a label to display the image
         self.label = QLabel(self)
@@ -20,10 +24,6 @@ class ImageWidget(QWidget):
         self.layout.addWidget(self.button)
         self.layout.addWidget(self.label)
         self.setLayout(self.layout)
-        
-        # Set the widget properties
-        self.setWindowTitle("Image Viewer")
-        self.setGeometry(100, 100, 300, 300)
     
     def show_file_dialog(self):
         # Create a file dialog window for selecting an image file
@@ -37,8 +37,8 @@ class ImageWidget(QWidget):
             image = QPixmap(file_path)
             # Set the image as the pixmap for the label
             self.label.setPixmap(image)
-            # Resize the window to fit the image
-            self.resize(image.width(), image.height())
+            # Resize the window to its initial size
+            self.resize(self.geometry().width(), self.geometry().height())
 
 if __name__ == "__main__":
     # Create the application instance
