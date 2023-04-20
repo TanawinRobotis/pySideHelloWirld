@@ -17,12 +17,12 @@ class MainWindow(QWidget):
 
         # Create the "Hello world" button at the center of the window
         button_hello = QPushButton('hello world', self)
-        button_hello.setGeometry(250, 450, 100, 50)
+        button_hello.setGeometry(150, 250, 100, 50)
         button_hello.clicked.connect(self.show_message_box)
 
         # Create the "Show image" button to the right of the "Hello world" button
         self.button_image = QPushButton('image', self)
-        self.button_image.setGeometry(350, 450, 100, 50)
+        self.button_image.setGeometry(250, 250, 100, 50)
         self.button_image.clicked.connect(self.select_image)
 
     def show_message_box(self):
