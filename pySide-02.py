@@ -1,6 +1,7 @@
 import sys
+import cv2
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QPixmap
+from PySide6.QtGui import QImage, QPixmap
 from PySide6.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget, QFileDialog
 
 class ImageWidget(QWidget):
@@ -9,7 +10,7 @@ class ImageWidget(QWidget):
 
         # Set the widget properties
         self.setWindowTitle("Image Viewer")
-        self.setGeometry(100, 100, 500, 500)
+        self.setGeometry(100, 100, 800, 500)
         
         # Create a label to display the image
         self.label = QLabel(self)
@@ -34,12 +35,20 @@ class ImageWidget(QWidget):
             # Get the selected file path
             file_path = file_dialog.selectedFiles()[0]
             # Load the image
-            image = QPixmap(file_path)
-            # Check if the image is larger than 250x250 and resize it if necessary
-            if image.width() > 250 or image.height() > 250:
-                image = image.scaled(250, 250, Qt.KeepAspectRatio)
+            image = cv2.imread(file_path)
+            # Convert the image from BGR to RGB color space
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            # Check if the image is larger than 400x400 and resize it if necessary
+            if image.shape[1] > 400 or image.shape[0] > 700:
+                image = cv2.resize(image, (700, 500), interpolation=cv2.INTER_AREA)
+            # Convert the image to a Qt pixmap
+            height, width, channel = image.shape
+            bytesPerLine = 3 * width
+            qt_image = QPixmap.fromImage(
+                QImage(image.data, width, height, bytesPerLine, QImage.Format_RGB888)
+            )
             # Set the image as the pixmap for the label
-            self.label.setPixmap(image)
+            self.label.setPixmap(qt_image)
             # Resize the window to its initial size
             self.resize(self.geometry().width(), self.geometry().height())
 
