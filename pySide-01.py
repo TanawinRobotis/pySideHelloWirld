@@ -13,9 +13,9 @@ class MainWindow(QWidget):
         self.setGeometry(100, 100, 500, 500)
         self.setWindowTitle('Hello World')
 
-        # Create a button at the center of the window
+        # Create a button at the bottom of the window
         button = QPushButton('Click me', self)
-        button.setGeometry(200, 200, 100, 50)
+        button.setGeometry(200, 400, 100, 50)
         button.clicked.connect(self.show_message_box)
 
     def show_message_box(self):
